@@ -216,7 +216,7 @@ def main():
             10 років досвіду технічного писання
             Ваш стиль письма чіткий, лаконічний та підкріплений ґрунтовними дослідженнями
         """,
-        tools=[save_report],
+        tools=[save_report, get_current_date],
         verbose=True,
         allow_delegation=False,
         llm="gpt-4.1"
@@ -235,7 +235,7 @@ def main():
         2. Статистики та фактів
         3. Думок експертів
         
-        Зберіть мінімум 5 ключових фактів. Використовуючи лише публікації за 180 днів від поточної дати
+        Зберіть мінімум 5 ключових фактів. Використовуючи лише публікації не старіші за один рік від поточної дати
         """,
         expected_output="Детальний список знайденої інформації з джерелами",
         agent=researcher
@@ -283,6 +283,7 @@ def main():
         tasks=[research_task, data_analysis, report_task],
         process=Process.sequential,
         verbose=True,
+        tracing=False,
         memory=False
     )
 
