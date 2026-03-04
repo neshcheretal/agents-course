@@ -181,6 +181,7 @@ def save_report(data: str, filename: str = None) -> str:
 
 
 def main():
+    #Створіть 3 агентів через Agent(role=..., goal=..., backstory=..., tools=...)
     researcher = Agent(
         role="Головний Дослідник AI",
         goal="Знаходити найактуальнішу інформацію з надійних джерел",
@@ -252,6 +253,7 @@ def main():
         Створіть структурований аналіз з висновками.
         """,
         expected_output="Аналітичний висновок з ключовими інсайтами",
+        context=[research_task],
         agent=analytic
     )
 
@@ -270,20 +272,21 @@ def main():
         Звіт має бути зрозумілим для всіх рівнів читачів. 
         Для назви файлу використовуй шаблон "AI-implementation-trends-<Current_time>.txt  де <Current_time> це поточний час отриманий за допогою інструменту Current_time
         """,
+        context=[data_analysis],
         expected_output="Професійний звіт збережений у файл з назвою що містить час генерації",
         agent=writer
     )
 
-
+    # Зберіть команду через Crew(agents=..., tasks=..., process=Process.sequential)
     crew = Crew(
         agents=[researcher, analytic, writer],
         tasks=[research_task, data_analysis, report_task],
-        process=Process.sequential,  # або Process.hierarchical
+        process=Process.sequential,
         verbose=True,
-        memory=False  # Опціонально: включає пам'ять
+        memory=False
     )
 
-    # Запуск команди
+    # Запустіть через crew.kickoff()
     result = crew.kickoff(inputs={"topic": unicodedata.normalize("NFC", "The latest AI implementation trends in business environment")})
 
 
