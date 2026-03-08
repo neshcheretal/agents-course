@@ -36,13 +36,13 @@ def search_web(query: str) -> str:
 
 
 @tool("Current_time")
-def get_current_date() -> datetime:
+def get_current_date() -> str:
     """
     Отримати поточний час
     """
-    today = datetime.today()
-    print(f"Поточна дата {today}")
-    return today
+    now = datetime.now()
+    print(f"Поточна дата {now}")
+    return now.strftime("%Y-%m-%d")
     
 
 @tool("Data_Analyzer")
