@@ -26,7 +26,7 @@ def search_web(query: str) -> str:
     results = []
     try:
         with DDGS() as ddgs:
-            for r in ddgs.text(query, max_results=3):
+            for r in ddgs.text(query, max_results=3, backend="duckduckgo"):
                 results.append(f"- {r['title']}: {r['body'][:150]}...")
         
         return f"Результати пошуку для '{query}':\n" + "\n".join(results)
